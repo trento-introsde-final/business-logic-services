@@ -53,7 +53,7 @@ public class GoalResource {
 			
 		if (res.getStatus() != 200) {
 			String message = "Problem at Storage Services. ";
-			if(pp != null){
+			if(!pp.isEmpty()){
 				JSONObject jo = new JSONObject(pp);
 				if(jo.getString("status").equals("ERROR")){
 					message += " Server replied: "+jo.getString("error");
@@ -80,7 +80,7 @@ public class GoalResource {
 			
 		if (res.getStatus() != 200) {
 			String message = "Problem at Storage Services. ";
-			if(pp != null){
+			if(!pp.isEmpty()){
 				JSONObject jo = new JSONObject(pp);
 				if(jo.getString("status").equals("ERROR")){
 					message += " Server replied: "+jo.getString("error");

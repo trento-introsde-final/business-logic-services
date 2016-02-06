@@ -28,6 +28,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
 
+import fitbot.bls.exception.ServerCommunicationException;
 import fitbot.bls.rest.output.BasicResponse;
 import fitbot.bls.rest.output.GoalResponseObject;
 import fitbot.bls.rest.output.GoalStatusObject;
@@ -300,16 +301,4 @@ public class UsersResource {
         return nRes;
     }*/
     
-    private class ServerCommunicationException extends Exception {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7373733210366402495L;
-		
-		public ServerCommunicationException(String message){
-			super(message);
-		}
-    	
-    }
 }
