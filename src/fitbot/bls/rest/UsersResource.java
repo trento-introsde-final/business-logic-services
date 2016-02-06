@@ -140,8 +140,14 @@ public class UsersResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getPersonalGoalStatus(@PathParam("userId") int userId) {
     	//GET goals
-    	GoalsResponse goalsResponse = getUserGoals(userId);
-    	List<GoalResponseObject> goals = goalsResponse.getGoals();
+    	GoalsResponse goalsResponse;
+    	try {
+    		goalsResponse = getUserGoals(userId);
+    	} catch (ServerCommunicationException e){
+    		BasicResponse bResp = new BasicResponse(e.getMessage());
+    		return Response.ok(bResp).build();
+    	}
+		List<GoalResponseObject> goals = goalsResponse.getGoals();
     	
     	//calculate date from which to fetch runs
     	Date today = new Date();
@@ -155,7 +161,13 @@ public class UsersResource {
     	long startDate = todayMillis - fetchPeriod*86400000;//TODO: Subtract days using java's methods
     	
     	//GET runs
-    	RunsResponse runsResponse = getUserRuns(userId, startDate);
+    	RunsResponse runsResponse;
+    	try {
+    		runsResponse = getUserRuns(userId, startDate);
+    	} catch (ServerCommunicationException e){
+    		BasicResponse bResp = new BasicResponse(e.getMessage());
+    		return Response.ok(bResp).build();
+    	}
     	List<RunResponseObject> runs = runsResponse.getRuns();
     	
     	//calculate amount done or missing for every goal
@@ -214,25 +226,33 @@ public class UsersResource {
         return nRes;
     }
   
-    private GoalsResponse getUserGoals(int userId){
+    private GoalsResponse getUserGoals(int userId) throws ServerCommunicationException{
     	Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target(String.format(URLUsersGoals, storageServiceURL, userId));
 		Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		
 		Response res = builder.get();
 		
+		if (res.getStatus() != 200){
+			String message = "Error retrieving user's goals. Got ERROR status code: "+res.getStatus();
+			throw new ServerCommunicationException(message);
+		}
 		GoalsResponse pp = res.readEntity(GoalsResponse.class);
 		
 		return pp;
     }
     
-    private RunsResponse getUserRuns(int userId, long startDate){
+    private RunsResponse getUserRuns(int userId, long startDate) throws ServerCommunicationException{
     	Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target(String.format(URLUsersRuns, storageServiceURL, userId, startDate));
 		Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
 		
 		Response res = builder.get();
 		
+		if (res.getStatus() != 200){
+			String message = "Error retrieving user's runs. Got ERROR status code: "+res.getStatus();
+			throw new ServerCommunicationException(message);
+		}
 		RunsResponse pp = res.readEntity(RunsResponse.class);
 		
 		return pp;
@@ -280,4 +300,16 @@ public class UsersResource {
         return nRes;
     }*/
     
+    private class ServerCommunicationException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7373733210366402495L;
+		
+		public ServerCommunicationException(String message){
+			super(message);
+		}
+    	
+    }
 }
