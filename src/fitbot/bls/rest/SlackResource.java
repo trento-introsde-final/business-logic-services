@@ -55,11 +55,16 @@ public class SlackResource {
 		String pp = res.readEntity(String.class);
 			
 		if (res.getStatus() != 200) {
-			String message = "Problem at Storage Services. ";
-			if(pp.isEmpty()){
-				JSONObject jo = new JSONObject(pp);
-				if(jo.getString("status").equals("ERROR")){
-					message += " Server replied: "+jo.getString("error");
+			String message = "Problem at Storage Services.";
+			if(!pp.isEmpty()){
+				JSONObject jo;
+				try{
+					jo = new JSONObject(pp);
+					if(jo.getString("status").equals("ERROR")){
+						message += " Server replied: "+jo.getString("error");
+					}
+				} catch (Exception e){
+					message += " Got code: "+res.getStatus();
 				}
 			}
 			BasicResponse bResp = new BasicResponse(message);

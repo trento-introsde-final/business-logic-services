@@ -84,9 +84,14 @@ public class UsersResource {
 		if(res.getStatus() != 201){
 			String message = "Problem at Storage Services. ";
 			if(pp != null && pp.length()!=0){
-				JSONObject jo = new JSONObject(pp);
-				if(jo.getString("status").equals("ERROR")){
-					message += " Server replied: "+jo.getString("error");
+				JSONObject jo;
+				try{
+					jo = new JSONObject(pp);
+					if(jo.getString("status").equals("ERROR")){
+						message += " Server replied: "+jo.getString("error");
+					}
+				} catch (Exception e){
+					message += " Got code: "+res.getStatus();
 				}
 			}
 			BasicResponse bResp = new BasicResponse(message);
@@ -123,9 +128,14 @@ public class UsersResource {
 		if (res.getStatus() != 200) {
 			String message = "Problem at Storage Services. ";
 			if(pp != null && pp.length()!=0){
-				JSONObject jo = new JSONObject(pp);
-				if(jo.getString("status").equals("ERROR")){
-					message += " Server replied: "+jo.getString("error");
+				JSONObject jo;
+				try{
+					jo = new JSONObject(pp);
+					if(jo.getString("status").equals("ERROR")){
+						message += " Server replied: "+jo.getString("error");
+					}
+				} catch (Exception e){
+					message += " Got code: "+res.getStatus();
 				}
 			}
 			BasicResponse bResp = new BasicResponse(message);
