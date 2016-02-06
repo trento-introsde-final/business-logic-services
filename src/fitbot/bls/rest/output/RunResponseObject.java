@@ -88,5 +88,4 @@ public class RunResponseObject {
 		this.avg_speed = avg_speed;
 	}
 	
-	
 }
