@@ -105,8 +105,8 @@
             </copy>
         </target>
         <target name="run" depends="install">
-            <echo message="app start fitbot.ldbs.App in ${build.dir}" />
-            <java classname="fitbot.ldbs.App" classpath="${build.dir}" fork="true">
+            <echo message="app start fitbot.bls.App in ${build.dir}" />
+            <java classname="fitbot.bls.App" classpath="${build.dir}" fork="true">
                 <arg value="$JAVA_OPTS  -cp" />
                 <classpath>
                     <path location="build" />
