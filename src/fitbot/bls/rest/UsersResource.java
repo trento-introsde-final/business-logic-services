@@ -1,6 +1,8 @@
 package fitbot.bls.rest;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,8 +91,19 @@ public class UsersResource {
 			BasicResponse bResp = new BasicResponse(message);
 			return Response.status(200).entity(bResp).build();
 		}
-		Response nRes = Response.created(res.getLocation()).entity(pp).build();
-        return nRes;
+		String[] pathParts = res.getLocation().getPath().split("/");
+		String id = pathParts[pathParts.length-1];
+		String newLocation = String.format(URLUsers, urlInfo.getBusinessLogicServicesURL(), id); 
+		Response nRes = null;
+		try{
+			nRes = Response.created(new URI(newLocation)).entity(pp).build();
+			
+		} catch (URISyntaxException e){
+			BasicResponse bResp = new BasicResponse("Error determining resource location URI.");
+			return Response.serverError().entity(bResp).build();
+		}
+		return nRes;
+
     }
  
     @PUT
