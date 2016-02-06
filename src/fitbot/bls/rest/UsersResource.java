@@ -183,6 +183,9 @@ public class UsersResource {
     				case "avg_speed":
     					accum += r.getAvg_speed();
     					break;
+    				case "steps":
+    					accum += Integer.valueOf(r.getSteps()).floatValue();
+    					break;
     				}
     			}
     		}

@@ -20,6 +20,8 @@ public class RunResponseObject {
 	
 	private Float avg_speed;
 	
+	private Integer steps;
+	
 	public RunResponseObject(){
 		
 	}
@@ -56,6 +58,10 @@ public class RunResponseObject {
 		return avg_speed;
 	}
 
+	public Integer getSteps(){
+		return steps;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -88,4 +94,7 @@ public class RunResponseObject {
 		this.avg_speed = avg_speed;
 	}
 	
+	public void setSteps(Integer steps){
+		this.steps = steps;
+	}
 }
