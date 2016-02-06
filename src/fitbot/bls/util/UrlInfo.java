@@ -4,7 +4,7 @@ public class UrlInfo {
 	
 	public UrlInfo() {}
 	
-	static final String storageServicesURL = "https://stark-falls-89698.herokuapp.com";
+	static final String storageServicesURL = "https://storage-services.herokuapp.com";
 	
 	public String getStorageServicesURL() {
 		return storageServicesURL;
