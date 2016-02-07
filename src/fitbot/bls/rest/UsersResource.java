@@ -32,6 +32,7 @@ import fitbot.bls.exception.ServerCommunicationException;
 import fitbot.bls.rest.output.BasicResponse;
 import fitbot.bls.rest.output.GoalResponseObject;
 import fitbot.bls.rest.output.GoalStatusObject;
+import fitbot.bls.rest.output.GoalStatusResponse;
 import fitbot.bls.rest.output.GoalsResponse;
 import fitbot.bls.rest.output.RunResponseObject;
 import fitbot.bls.rest.output.RunsResponse;
@@ -233,7 +234,9 @@ public class UsersResource {
     		gStatusList.add(gStatus);
     	}
     	
-    	Response nRes = Response.ok(gStatusList).build();
+    	GoalStatusResponse gStatusResp = new GoalStatusResponse();
+    	gStatusResp.setGoal_status(gStatusList);
+    	Response nRes = Response.ok(gStatusResp).build();
         return nRes;
     }
   
